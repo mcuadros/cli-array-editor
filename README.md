@@ -24,7 +24,7 @@ You can see [package information on Packagist.](https://packagist.org/packages/m
 ```JSON
 {
     "require": {
-        "cli-array-editor": "dev"
+        "mcuadros/cli-array-editor": "dev"
     }
 }
 ```

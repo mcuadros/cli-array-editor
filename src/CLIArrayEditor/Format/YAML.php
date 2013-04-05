@@ -16,11 +16,11 @@ use CLIArrayEditor\Format;
 */
 class YAML implements Format
 {
-     /**
-      * Class constructor
-      *
-      * @throws Exception if PECL yaml >= 0.5.0 not is pressent.
-      */
+    /**
+     * Class constructor
+     *
+     * @throws Exception if PECL yaml >= 0.5.0 not is pressent.
+     */
     public function __construct()
     {
         if ( !function_exists('yaml_parse') ) {

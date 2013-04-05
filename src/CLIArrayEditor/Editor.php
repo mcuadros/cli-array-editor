@@ -20,7 +20,7 @@ class Editor
     protected $path;
     protected $editor;
     protected $forceModify;
-    protected $retries;
+    protected $retries = 3;
 
     /**
      * Class constructor
@@ -95,7 +95,7 @@ class Editor
      *
      * @return boolean 
      */
-    public function getForceModify($boolean)
+    public function getForceModify()
     {
         return $this->forceModify;
     }
@@ -113,6 +113,16 @@ class Editor
         return $this;
     }
 
+    /**
+     * Gets the temporal directory
+     *
+     * @return string 
+     */
+    public function getTemporalPath()
+    {
+        return $this->path;
+    }
+    
     /**
      * Gets maximum retries
      *
@@ -136,15 +146,6 @@ class Editor
         return $this;
     }
 
-    /**
-     * Gets the temporal directory
-     *
-     * @return string 
-     */
-    public function getTemporalPath()
-    {
-        return $this->path;
-    }
 
     /**
      * Launch the editor and return the modified result, false if failed.

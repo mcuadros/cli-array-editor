@@ -1,6 +1,18 @@
 <?php
+/*
+ * This file is part of the CLIArrayEditor package.
+ *
+ * (c) Máximo Cuadros <mcuadros@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace CLIArrayEditor;
 
+/**
+* Main editor class
+*/
 class Editor
 {
     protected $format;
@@ -8,48 +20,144 @@ class Editor
     protected $path;
     protected $editor;
     protected $forceModify;
+    protected $retries;
 
-    public function __construct($prefix = 'cae')
+    /**
+     * Class constructor
+     */
+    public function __construct()
     {
         $this->path = sys_get_temp_dir();
     }
 
+    /**
+     * Sets the format instance
+     *
+     * @param Format $format a Format instance
+     *
+     * @return self The current Editor instance
+     */
     public function setFormat(Format $format)
     {
         $this->format = $format;
         return $this;
     }
 
+    /**
+     * Gets the format object
+     *
+     * @return Format 
+     */
     public function getFormat()
     {
         return $this->format;
     }
 
+    /**
+     * Sets the command used to launch the editor if not is defined $EDITOR from env,
+     * will be used, if not present "vim" will be used.
+     *
+     * @param string $cmd shell command eg.: "/urs/bin/vim"
+     *
+     * @return self The current Editor instance
+     */
     public function setEditor($cmd)
     {
         $this->editor = $cmd;
         return $this;
     }
 
+    /**
+     * Gets the editor command
+     *
+     * @return string 
+     */
     public function getEditor()
     {
         return $this->editor;
     }
 
+    /**
+     * Sets if a not modified element is marked as a fail.
+     *
+     * @param boolean $boolean
+     *
+     * @return self The current Editor instance
+     */
     public function setForceModify($boolean)
     {
         $this->forceModify = (boolean)$boolean;
         return $this;
     }
 
+    /**
+     * Gets force modify option
+     *
+     * @return boolean 
+     */
     public function getForceModify($boolean)
     {
         return $this->forceModify;
     }
 
-    public function edit(array $data, $retries = 3)
+    /**
+     * Sets the path where the temporal files ar stored
+     *
+     * @param string $path
+     *
+     * @return self The current Editor instance
+     */
+    public function setTemporalPath($path)
+    {
+        $this->path = $path;
+        return $this;
+    }
+
+    /**
+     * Gets maximum retries
+     *
+     * @return integer 
+     */
+    public function getRetries()
+    {
+        return $this->retries;
+    }
+
+    /**
+     * Sets maximun retries when editing, if malformed content or not unmodified
+     *
+     * @param integer $retries
+     *
+     * @return self The current Editor instance
+     */
+    public function setRetries($retries)
+    {
+        $this->retries = $retries;
+        return $this;
+    }
+
+    /**
+     * Gets the temporal directory
+     *
+     * @return string 
+     */
+    public function getTemporalPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * Launch the editor and return the modified result, false if failed.
+     *
+     * @param array $data
+     *
+     * @return mixed
+     */
+    public function edit(array $data)
     {
         $result = false;
+        $retries = $this->retries;
+
         while ( !$result && $retries > 0 ) {
             $retries--;
 
@@ -57,6 +165,8 @@ class Editor
             $this->launchEditor($filename);
             
             $result = $this->readFromFile($filename);
+
+            if ( $this->forceModify && $result == $data ) $result = false; 
         }
 
         return $result;
@@ -104,11 +214,10 @@ class Editor
         );
 
         $process = proc_open($cmd, $descriptors, $pipes, $path);
-        if (is_resource($process)) {
-         
-            $return_value = proc_close($process);
-
-            echo "command returned $return_value\n";
+        if ( is_resource($process) ) {
+            return proc_close($process);
+        } else {
+            return false;
         }
     }
 }

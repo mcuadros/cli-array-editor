@@ -11,6 +11,9 @@
             "email": "mcuadros@gmail.com"
         }
     ],
+    "suggest": {
+        "ext-yaml": "Allows YAML format."
+    },
     "autoload": {
         "psr-0": {
             "CLIArrayEditor": "src/"

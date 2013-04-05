@@ -5,6 +5,7 @@ This library provides an easy way to edit arrays in CLI using vim or your prefer
 
 Can be useful in scenarios where we need an interface to edit arrays from a CLI PHP application, CLIArrayEditor will open an editor with the array in a readable format (json, yaml, etc) and wait for the user (like "crontab -e" or "git commit"). 
 
+The editor can be configured or by default $EDITOR from the environment will be used.
 
 Requirements
 ------------
@@ -49,6 +50,7 @@ $result = $editor
 print_r($result);
 ```
 
+Check available Editor's methods in [src/CLIArrayEditor/Editor.php](src/CLIArrayEditor/Editor.php)
 
 Tests
 -----

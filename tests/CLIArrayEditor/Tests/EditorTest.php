@@ -107,22 +107,6 @@ class EditorTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue((boolean)$result);
     }
 
-    public function testSetTemporalPath()
-    {
-        $tmp = array(
-            'baz' => true,
-            'foo' => 'bar'
-        );
-
-        $path = sys_get_temp_dir() . uniqid();
-        mkdir($path);
-
-        $editor = new MockEditor;
-        $result = $editor->setFormat(new JSON)->setTemporalPath($path)->edit($tmp);
-
-        $this->assertSame(dirname($editor->filename), $path);
-    }
-
     public function testSetRetries()
     {
         $tmp = array(
@@ -146,7 +130,7 @@ class EditorTest extends \PHPUnit_Framework_TestCase
         $editor = new Editor();
         $result = $editor
             ->setEditor('true ')
-            ->setFormat(new YAML)
+            ->setFormat(new JSON)
             ->edit($tmp);
     }
 }

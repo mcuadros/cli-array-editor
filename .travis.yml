@@ -8,4 +8,5 @@ php:
 script: phpunit
 
 before_script:
+  - printf "\n"| pecl install yaml
   - composer --dev install

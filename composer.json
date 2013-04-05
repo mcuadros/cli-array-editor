@@ -1,0 +1,21 @@
+{
+    "name": "mcuadros/cli-array-editor",
+    "homepage": "http://github.com/mcuadros/cli-array-editor",
+    "description": "This class provides an easy way to edit arrays in CLI using vim or your preferred editor.",
+    "type": "library",
+    "keywords": ["vim", "cli", "editor"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name":  "Máximo Cuadros",
+            "email": "mcuadros@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "CLIArrayEditor": "src/"
+        }
+    }
+}
+
+

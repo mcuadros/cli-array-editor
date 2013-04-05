@@ -122,11 +122,11 @@ class EditorTest extends \PHPUnit_Framework_TestCase
 
     public function testEdit()
     {
-        $tmp = [
+        $tmp = array(
             'baz' => true,
             'foo' => 'bar'
-        ];
-
+        );
+        
         $editor = new Editor();
         $result = $editor
             ->setEditor('true ')

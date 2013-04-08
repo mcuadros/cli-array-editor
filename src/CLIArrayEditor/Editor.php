@@ -19,6 +19,7 @@ class Editor
     protected $prefix;
     protected $path;
     protected $editor;
+    protected $comments;
     protected $forceModify;
     protected $retries = 3;
 
@@ -146,6 +147,28 @@ class Editor
         return $this;
     }
 
+    /**
+     * Gets comments to be attached to the file
+     *
+     * @return integer 
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * Sets comments to be attached to the file if the format selected supports it.
+     *
+     * @param string $comments
+     *
+     * @return self The current Editor instance
+     */
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
+        return $this;
+    }
 
     /**
      * Launch the editor and return the modified result, false if failed.
@@ -187,7 +210,7 @@ class Editor
     protected function writeToFile(array $data)
     {
         $filename = sprintf('%s/%s_%s.%s', $this->path, $this->prefix, uniqid(), 'json');
-        $string = $this->format->to($data);
+        $string = $this->format->to($data, $this->comments);
 
         if ( file_put_contents($filename, $string) ) {
             return $filename;

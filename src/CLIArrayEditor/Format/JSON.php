@@ -19,7 +19,7 @@ class JSON implements Format
     /**
      * {@inheritdoc}
      */
-    public function to(array $data)
+    public function to(array $data, $comments = null)
     {
         if (version_compare(PHP_VERSION, '5.4.0') >= 0) {
             return json_encode($data, JSON_PRETTY_PRINT);

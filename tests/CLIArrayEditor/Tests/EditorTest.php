@@ -64,6 +64,17 @@ class EditorTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($retries, $editor->getRetries()); 
     }
 
+
+    public function testSetCommentsAndGetComments()
+    {
+        $comments = 'foo';
+        $editor = new Editor();
+        
+        $this->assertSame($editor, $editor->setComments($comments));
+        $this->assertSame($comments, $editor->getComments());
+    }
+
+
     public function testSetFormat()
     {
         $tmp = array(

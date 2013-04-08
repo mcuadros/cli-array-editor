@@ -31,6 +31,24 @@ class YAMLTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expected, $yaml->to($tmp));
     }
 
+    public function testToWithComments() 
+    {
+        if ( !function_exists('yaml_parse') ) {
+            $this->markTestIncomplete('PECL yaml >= 0.5.0 extension not found');
+        }
+
+        $tmp = array(
+            'baz' => true,
+            'foo' => 'bar'
+        );
+
+        $comments = 'foo';
+
+        $expected = "foo\n---\nbaz: true\nfoo: bar\n...\n";
+        $yaml = new YAML;
+
+        $this->assertSame($expected, $yaml->to($tmp, $comments));
+    }
     public function testFrom() 
     {
         if ( !function_exists('yaml_emit') ) {

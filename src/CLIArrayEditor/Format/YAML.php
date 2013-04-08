@@ -31,8 +31,9 @@ class YAML implements Format
     /**
      * {@inheritdoc}
      */
-    public function to(array $data)
+    public function to(array $data, $comments = null)
     {
+        if ( $comments ) return $comments . PHP_EOL . yaml_emit($data);
         return yaml_emit($data);
     }
 

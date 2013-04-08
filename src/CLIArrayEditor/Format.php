@@ -28,8 +28,8 @@ interface Format
      * Converts an array to a string
      *
      * @param array $data 
-     *
+     * @param string $comments (optional) added to the file if the format supports comments
      * @return string
      */
-    public function to(array $data);
+    public function to(array $data, $comments = null);
 }
